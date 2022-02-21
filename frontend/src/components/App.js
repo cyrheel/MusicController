@@ -11,22 +11,6 @@ import HomePage from "./HomePage";
 import CreateRoomPage from "./CreateRoomPage";
 import RoomJoinPage from "./RoomJoinPage";
 
-/*
-export default class App extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <div className="Routess">
-        
-      </div>
-    );
-  }
-}
-*/
-
 function App(props) {
   return (
     <Router>
@@ -40,4 +24,9 @@ function App(props) {
 }
 
 const appDiv = document.getElementById("app");
-render(<App />, appDiv);
+render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  appDiv
+);

@@ -6,7 +6,19 @@ class HomePage extends Component {
   }
 
   render() {
-    return <h1>Home PAGE :)</h1>;
+    return (
+      <div className="home-container">
+        <h1>Music Controller</h1>
+        <div className="btn-container">
+          <a className="btn" href="/create">
+            Create Room
+          </a>
+          <a className="btn" href="/join">
+            Join Room
+          </a>
+        </div>
+      </div>
+    );
   }
 }
 

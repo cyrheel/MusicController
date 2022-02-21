@@ -6,7 +6,21 @@ class CreateRoomPage extends Component {
   }
 
   render() {
-    return <p>This is the Create! Room Page</p>;
+    return (
+      <div className="create-container">
+        <div className="create-header">
+          <a href="/">
+            <img
+              src="static/images/arrow-left-circle-fill.svg"
+              alt="back-icon"
+            ></img>
+          </a>
+        </div>
+        <div className="create-body">
+          <h1>This is the Create Room Page</h1>
+        </div>
+      </div>
+    );
   }
 }
 
