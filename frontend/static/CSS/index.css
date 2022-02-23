@@ -76,15 +76,42 @@ img {
 .create-header {
   display: flex;
   width: 100%;
-  height: auto;
+  height: 10vh;
 }
 
 .create-body {
   display: flex;
   flex-flow: column;
   width: 100%;
-  height: auto;
+  height: 80vh;
+  justify-content: flex-start;
   text-align: center;
+}
+
+.guest-can-pause {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  margin: 2%;
+}
+
+.form-can-pause {
+  display: flex;
+  width: 50%;
+  justify-content: space-around;
+}
+
+.choice-container {
+  display: flex;
+  flex-flow: column-reverse;
+  width: 40%;
+  align-items: center;
+  margin: 2%;
+}
+
+.input-gcp {
+  height: 4vh;
+  width: 40%;
 }
 
 /*## JOIN ROOM PAGE ##*/
