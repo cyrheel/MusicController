@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from .models import Room
 from .serializers import RoomSerializer, CreateRoomSerializer
 
+
 class RoomView(generics.ListAPIView):
   queryset = Room.objects.all()
   serializer_class = RoomSerializer
@@ -54,6 +55,7 @@ class CreateRoomView(APIView):
         return Response(RoomSerializer(room).data, status=status.HTTP_201_CREATED)
     else:
       return Response({'Bad Request': 'Invalid data...'}, status=status.HTTP_400_BAD_REQUEST)
+
 
 class UserInRoom(APIView):
   def get(self, request, format=None):
