@@ -21,11 +21,45 @@ function Room(props) {
       });
   }, []);
 
+  const leaveButtonPressed = () => {
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== "") {
+        let cookies = document.cookie.split(";");
+        for (let i = 0; i < cookies.length; i++) {
+          let cookie = jQuery.trim(cookies[i]);
+          if (cookie.substring(0, name.length + 1) === name + "=") {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+
+    let csrftoken = getCookie("csrftoken");
+
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        Accepte: "application/json",
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrftoken,
+      },
+    };
+
+    fetch("/api/leave-room", requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      });
+  };
+
   const display404 = () => {
     return (
       <div>
         <h3>Room Not Found :/</h3>
-        <button to="/">Back on Home Page</button>
+        <a href="/">Back on Home Page</a>
       </div>
     );
   };
@@ -37,6 +71,9 @@ function Room(props) {
         <p>Votes: {votesToSkip}</p>
         <p>guestCanPause: {guestCanPause}</p>
         <p>Host: {isHost}</p>
+        <a href="/" onClick={leaveButtonPressed}>
+          Leave Room
+        </a>
       </div>
     );
   };

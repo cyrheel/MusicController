@@ -114,6 +114,12 @@ img {
   width: 40%;
 }
 
+.send-form-container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
 /*## JOIN ROOM PAGE ##*/
 
 .join-container {
