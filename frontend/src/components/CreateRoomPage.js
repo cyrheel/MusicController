@@ -1,17 +1,47 @@
 import React, { Component } from "react";
 
 class CreateRoomPage extends Component {
-  defaultVotes = 2;
+  static defaultProps = {
+    votesToSkip: 2,
+    guestCanPause: true,
+    update: false,
+    roomCode: null,
+    updateCallback: () => {},
+  };
 
   constructor(props) {
     super(props);
     this.state = {
-      guestCanPause: true,
-      votesToSkip: this.defaultVotes,
+      guestCanPause: this.props.guestCanPause,
+      votesToSkip: this.props.votesToSkip,
+      errorMsg: "",
+      successMsg: "",
+      updateStatus: null,
     };
+    this.getCookie = this.getCookie.bind(this);
     this.handleVotesChange = this.handleVotesChange.bind(this);
     this.handleGuestCanPauseChange = this.handleGuestCanPauseChange.bind(this);
     this.handleCreateRoomPressed = this.handleCreateRoomPressed.bind(this);
+    this.handleUpdateRoomPressed = this.handleUpdateRoomPressed.bind(this);
+    this.renderHeader = this.renderHeader.bind(this);
+    this.renderCreateButtons = this.renderCreateButtons.bind(this);
+    this.renderUpdateButtons = this.renderUpdateButtons.bind(this);
+    this.renderPopUp = this.renderPopUp.bind(this);
+  }
+
+  getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      let cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        let cookie = jQuery.trim(cookies[i]);
+        if (cookie.substring(0, name.length + 1) === name + "=") {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
   }
 
   handleVotesChange(e) {
@@ -27,22 +57,7 @@ class CreateRoomPage extends Component {
   }
 
   handleCreateRoomPressed() {
-    function getCookie(name) {
-      let cookieValue = null;
-      if (document.cookie && document.cookie !== "") {
-        let cookies = document.cookie.split(";");
-        for (let i = 0; i < cookies.length; i++) {
-          let cookie = jQuery.trim(cookies[i]);
-          if (cookie.substring(0, name.length + 1) === name + "=") {
-            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-            break;
-          }
-        }
-      }
-      return cookieValue;
-    }
-
-    let csrftoken = getCookie("csrftoken");
+    let csrftoken = this.getCookie("csrftoken");
 
     const requestOptions = {
       method: "POST",
@@ -60,23 +75,104 @@ class CreateRoomPage extends Component {
     fetch("api/create-room", requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        window.location.href = `/room/${data.code}`;
+        let roomPath = "/room/" + data.code;
+        window.location.href = roomPath;
       });
   }
 
+  handleUpdateRoomPressed() {
+    let csrftoken = this.getCookie("csrftoken");
+    let curr_url = window.location.href;
+    let to_remove = "/room/" + this.props.roomCode;
+    let url_for_fetch = curr_url.replace(to_remove, "/api/update-room");
+
+    const requestOptions = {
+      method: "PATCH",
+      headers: {
+        Accepte: "application/json",
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrftoken,
+      },
+      body: JSON.stringify({
+        votes_to_skip: this.state.votesToSkip,
+        guest_can_pause: this.state.guestCanPause,
+        code: this.props.roomCode,
+      }),
+    };
+
+    fetch(url_for_fetch, requestOptions)
+      .then((response) => {
+        if (response.ok) {
+          this.setState({
+            successMsg: "Room updated successfully !",
+            updateStatus: true,
+          });
+        } else {
+          this.setState({
+            errorMsg: "Error while updating room :/",
+            updateStatus: false,
+          });
+        }
+        return response.json();
+      })
+      .then((data) => {
+        this.setState({
+          guestCanPause: data.guest_can_pause,
+          votesToSkip: data.votes_to_skip,
+        });
+      });
+  }
+
+  renderHeader() {
+    return (
+      <div className="create-header">
+        <a href="/">
+          <img
+            src="static/images/arrow-left-circle-fill.svg"
+            alt="back-icon"
+          ></img>
+        </a>
+      </div>
+    );
+  }
+
+  renderCreateButtons() {
+    return (
+      <button onClick={this.handleCreateRoomPressed}>Create Room !</button>
+    );
+  }
+
+  renderUpdateButtons() {
+    return (
+      <button onClick={this.handleUpdateRoomPressed}>Update Room !</button>
+    );
+  }
+
+  renderPopUp(status) {
+    if (status) {
+      return (
+        <div>
+          <p>{this.state.successMsg}</p>
+        </div>
+      );
+    }
+    return (
+      <div>
+        <p>{this.state.errorMsg}</p>
+      </div>
+    );
+  }
+
   render() {
+    const title = this.props.update ? "Update Room" : "Create a Room";
     return (
       <div className="create-container">
-        <div className="create-header">
-          <a href="/">
-            <img
-              src="static/images/arrow-left-circle-fill.svg"
-              alt="back-icon"
-            ></img>
-          </a>
-        </div>
+        {this.props.update ? null : this.renderHeader()}
         <div className="create-body">
-          <h1>Create a Room</h1>
+          {this.state.updateStatus
+            ? this.renderPopUp(true)
+            : this.renderPopUp(false)}
+          <h1>{title}</h1>
           <div className="guest-can-pause">
             <h2>Guest Control of Payback State</h2>
             <div className="form-can-pause">
@@ -89,6 +185,7 @@ class CreateRoomPage extends Component {
                   className="input-gcp"
                   onChange={this.handleGuestCanPauseChange}
                   value="true"
+                  defaultChecked={this.props.guestCanPause}
                 ></input>
               </div>
               <div className="choice-container">
@@ -100,6 +197,7 @@ class CreateRoomPage extends Component {
                   className="input-gcp"
                   onChange={this.handleGuestCanPauseChange}
                   value="false"
+                  defaultChecked={!this.props.guestCanPause}
                 ></input>
               </div>
             </div>
@@ -115,9 +213,9 @@ class CreateRoomPage extends Component {
             ></input>
           </div>
           <div className="send-form-container">
-            <button onClick={this.handleCreateRoomPressed}>
-              Create Room !
-            </button>
+            {this.props.update
+              ? this.renderUpdateButtons()
+              : this.renderCreateButtons()}
           </div>
         </div>
       </div>

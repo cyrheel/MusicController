@@ -10,5 +10,12 @@ class CreateRoomSerializer(serializers.ModelSerializer):
   class Meta:
     model = Room
     exclude = ['id', 'code', 'host', 'created_at']
+
+
+class UpdateRoomSerializer(serializers.ModelSerializer):
+  code = serializers.CharField(validators=[])
+
+  class Meta:
+    model = Room
+    exclude = ['id', 'host', 'created_at']
     
-     

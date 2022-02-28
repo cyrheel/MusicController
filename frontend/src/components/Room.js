@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import CreateRoomPage from "./CreateRoomPage";
 
 function Room(props) {
   const roomCode = useParams().roomCode;
@@ -7,6 +8,7 @@ function Room(props) {
   const [votesToSkip, setVotesToSkip] = useState(1);
   const [guestCanPause, setguestCanPause] = useState(false);
   const [isHost, setIsHost] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
 
   useEffect(() => {
     fetch("/api/get-room" + "?code=" + roomCode)
@@ -20,6 +22,50 @@ function Room(props) {
         setIsHost(data.is_host);
       });
   }, []);
+
+  const updateShowSettings = (value) => {
+    if (value) {
+      setShowSettings(value);
+    } else {
+      setShowSettings(value);
+      location.reload();
+    }
+  };
+
+  const renderSettingsButton = () => {
+    return (
+      <div>
+        <button
+          onClick={() => {
+            updateShowSettings(true);
+          }}
+        >
+          Settings
+        </button>
+      </div>
+    );
+  };
+
+  const renderSettings = () => {
+    return (
+      <div className="room-setting-page">
+        <CreateRoomPage
+          update={true}
+          votesToSkip={votesToSkip}
+          guestCanPause={guestCanPause}
+          roomCode={roomCode}
+          updateCallBack={() => {}}
+        />
+        <button
+          onClick={() => {
+            updateShowSettings(false);
+          }}
+        >
+          Close
+        </button>
+      </div>
+    );
+  };
 
   const leaveButtonPressed = () => {
     function getCookie(name) {
@@ -56,6 +102,7 @@ function Room(props) {
   };
 
   const display404 = () => {
+    leaveButtonPressed();
     return (
       <div>
         <h3>Room Not Found :/</h3>
@@ -65,12 +112,16 @@ function Room(props) {
   };
 
   const displayRoom = () => {
+    if (showSettings) {
+      return renderSettings();
+    }
     return (
       <div>
         <h3>{roomCode}</h3>
         <p>Votes: {votesToSkip}</p>
-        <p>guestCanPause: {guestCanPause}</p>
-        <p>Host: {isHost}</p>
+        <p>guestCanPause: {guestCanPause.toString()}</p>
+        <p>Host: {isHost.toString()}</p>
+        {isHost ? renderSettingsButton() : null}
         <a href="/" onClick={leaveButtonPressed}>
           Leave Room
         </a>
