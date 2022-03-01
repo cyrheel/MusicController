@@ -1,0 +1,104 @@
+.container {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  height: 100vh;
+}
+
+.backBtn {
+  width: 5%;
+  padding: 2%;
+  filter: invert(70%) sepia(41%) saturate(289%) hue-rotate(136deg)
+    brightness(95%) contrast(87%);
+}
+
+.body {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  height: 75vh;
+  align-items: center;
+}
+
+.h1 {
+  width: 75%;
+  font-size: 350%;
+  text-align: center;
+  color: #7ebdc2;
+}
+
+.h2 {
+  color: #efe6dd;
+}
+
+.choiceContainer {
+  display: flex;
+  flex-flow: column;
+  width: 75%;
+  margin: 2%;
+  align-items: center;
+  border: 2px solid #efe6dd;
+  border-radius: 5px;
+}
+
+.inputsWrapper {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.inputContainer {
+  display: flex;
+  flex-flow: column;
+  width: 30%;
+  margin: 1% 0 4% 0;
+  padding: 1% 0 2% 0;
+  align-items: center;
+  background: #efe6dd;
+  border-radius: 50px;
+}
+
+.inputContainer > label {
+  margin: 1%;
+  padding: 1%;
+}
+
+.inputContainer > input {
+  height: 3.5vh;
+  width: 25%;
+}
+
+.hr {
+  height: 60%;
+  margin-bottom: 4%;
+}
+
+.choiceContainer > input {
+  width: 25%;
+  height: 4vh;
+  text-align: center;
+  font-size: 125%;
+  margin: 1% 0 4% 0;
+}
+
+.btnContainer {
+  display: flex;
+  width: 25%;
+  height: 6vh;
+  margin: 2%;
+  justify-content: center;
+}
+
+.createBtn {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.createBtn:hover {
+  background: #7ebdc2;
+  font-weight: bold;
+}

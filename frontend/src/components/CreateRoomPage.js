@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import styles from "/static/CSS/CreateRoomPage.module.css";
 
 class CreateRoomPage extends Component {
   static defaultProps = {
@@ -125,11 +126,12 @@ class CreateRoomPage extends Component {
 
   renderHeader() {
     return (
-      <div className="create-header">
+      <div>
         <a href="/">
           <img
             src="static/images/arrow-left-circle-fill.svg"
             alt="back-icon"
+            className={styles.backBtn}
           ></img>
         </a>
       </div>
@@ -138,7 +140,12 @@ class CreateRoomPage extends Component {
 
   renderCreateButtons() {
     return (
-      <button onClick={this.handleCreateRoomPressed}>Create Room !</button>
+      <button
+        className={styles.createBtn}
+        onClick={this.handleCreateRoomPressed}
+      >
+        Create Room
+      </button>
     );
   }
 
@@ -151,13 +158,13 @@ class CreateRoomPage extends Component {
   renderPopUp(status) {
     if (status) {
       return (
-        <div>
+        <div className={styles.popUp}>
           <p>{this.state.successMsg}</p>
         </div>
       );
     }
     return (
-      <div>
+      <div className={styles.popUp}>
         <p>{this.state.errorMsg}</p>
       </div>
     );
@@ -166,35 +173,34 @@ class CreateRoomPage extends Component {
   render() {
     const title = this.props.update ? "Update Room" : "Create a Room";
     return (
-      <div className="create-container">
+      <div className={styles.container}>
         {this.props.update ? null : this.renderHeader()}
-        <div className="create-body">
+        <div className={styles.body}>
           {this.state.updateStatus
             ? this.renderPopUp(true)
             : this.renderPopUp(false)}
-          <h1>{title}</h1>
-          <div className="guest-can-pause">
-            <h2>Guest Control of Payback State</h2>
-            <div className="form-can-pause">
-              <div className="choice-container">
+          <h1 className={styles.h1}>{title}</h1>
+          <div className={styles.choiceContainer}>
+            <h2 className={styles.h2}>User Can Pause a Song</h2>
+            <div className={styles.inputsWrapper}>
+              <div className={styles.inputContainer}>
                 <label htmlFor="play-pause">Play/Pause</label>
                 <input
                   type="radio"
                   id="play-pause"
                   name="gcp"
-                  className="input-gcp"
                   onChange={this.handleGuestCanPauseChange}
                   value="true"
                   defaultChecked={this.props.guestCanPause}
                 ></input>
               </div>
-              <div className="choice-container">
+              <hr className={styles.hr} />
+              <div className={styles.inputContainer}>
                 <label htmlFor="no-control">No Control</label>
                 <input
                   type="radio"
                   id="no-control"
                   name="gcp"
-                  className="input-gcp"
                   onChange={this.handleGuestCanPauseChange}
                   value="false"
                   defaultChecked={!this.props.guestCanPause}
@@ -202,8 +208,8 @@ class CreateRoomPage extends Component {
               </div>
             </div>
           </div>
-          <div className="votes-to-skip">
-            <h2>Votes Required to Skip Song</h2>
+          <div className={styles.choiceContainer}>
+            <h2 className={styles.h2}>Votes Required to Skip Song</h2>
             <input
               type="number"
               id="vote-skip"
@@ -212,7 +218,7 @@ class CreateRoomPage extends Component {
               onChange={this.handleVotesChange}
             ></input>
           </div>
-          <div className="send-form-container">
+          <div className={styles.btnContainer}>
             {this.props.update
               ? this.renderUpdateButtons()
               : this.renderCreateButtons()}

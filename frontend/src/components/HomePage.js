@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import styles from "/static/CSS/HomePage.module.css";
 
 class HomePage extends Component {
   constructor(props) {
@@ -7,13 +8,13 @@ class HomePage extends Component {
 
   render() {
     return (
-      <div className="home-container">
-        <h1>Music Controller</h1>
-        <div className="btn-container">
-          <a className="btn" href="/create">
+      <div className={styles.container}>
+        <h1 className={styles.h1}>Music Controller</h1>
+        <div className={styles.choiceContainer}>
+          <a className={styles.btn} href="/create">
             Create Room
           </a>
-          <a className="btn" href="/join">
+          <a className={styles.btn} href="/join">
             Join Room
           </a>
         </div>
