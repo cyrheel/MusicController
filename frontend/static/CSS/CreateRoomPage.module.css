@@ -2,7 +2,7 @@
   display: flex;
   flex-flow: column;
   width: 100%;
-  height: 100vh;
+  height: auto;
 }
 
 .backBtn {
@@ -18,6 +18,7 @@
   width: 100%;
   height: 75vh;
   align-items: center;
+  justify-content: space-evenly;
 }
 
 .h1 {
@@ -35,7 +36,7 @@
   display: flex;
   flex-flow: column;
   width: 75%;
-  margin: 2%;
+  padding: 2%;
   align-items: center;
   border: 2px solid #efe6dd;
   border-radius: 5px;
@@ -52,7 +53,6 @@
   display: flex;
   flex-flow: column;
   width: 30%;
-  margin: 1% 0 4% 0;
   padding: 1% 0 2% 0;
   align-items: center;
   background: #efe6dd;
@@ -60,12 +60,11 @@
 }
 
 .inputContainer > label {
-  margin: 1%;
   padding: 1%;
 }
 
 .inputContainer > input {
-  height: 3.5vh;
+  height: auto;
   width: 25%;
 }
 
@@ -76,17 +75,15 @@
 
 .choiceContainer > input {
   width: 25%;
-  height: 4vh;
+  height: auto;
   text-align: center;
-  font-size: 125%;
-  margin: 1% 0 4% 0;
+  font-size: 120%;
 }
 
 .btnContainer {
   display: flex;
   width: 25%;
-  height: 6vh;
-  margin: 2%;
+  height: auto;
   justify-content: center;
 }
 
@@ -94,6 +91,7 @@
   display: flex;
   width: 100%;
   height: 100%;
+  margin: 2%;
   align-items: center;
   justify-content: center;
 }
@@ -101,4 +99,12 @@
 .createBtn:hover {
   background: #7ebdc2;
   font-weight: bold;
+}
+
+.popUp {
+  position: absolute;
+  top: 0;
+  left: 35;
+  background: greenyellow;
+  z-index: 2;
 }

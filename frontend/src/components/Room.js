@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import CreateRoomPage from "./CreateRoomPage";
+import styles from "/static/CSS/Room.module.css";
 
 function Room(props) {
   const roomCode = useParams().roomCode;
@@ -34,21 +35,20 @@ function Room(props) {
 
   const renderSettingsButton = () => {
     return (
-      <div>
-        <button
-          onClick={() => {
-            updateShowSettings(true);
-          }}
-        >
-          Settings
-        </button>
-      </div>
+      <button
+        onClick={() => {
+          updateShowSettings(true);
+        }}
+        className={styles.settingBtn}
+      >
+        Settings
+      </button>
     );
   };
 
   const renderSettings = () => {
     return (
-      <div className="room-setting-page">
+      <div className={styles.roomContainer}>
         <CreateRoomPage
           update={true}
           votesToSkip={votesToSkip}
@@ -56,13 +56,16 @@ function Room(props) {
           roomCode={roomCode}
           updateCallBack={() => {}}
         />
-        <button
-          onClick={() => {
-            updateShowSettings(false);
-          }}
-        >
-          Close
-        </button>
+        <div className={styles.closeBtnContainer}>
+          <button
+            onClick={() => {
+              updateShowSettings(false);
+            }}
+            className={styles.closeBtn}
+          >
+            Close
+          </button>
+        </div>
       </div>
     );
   };
@@ -116,13 +119,13 @@ function Room(props) {
       return renderSettings();
     }
     return (
-      <div>
-        <h3>{roomCode}</h3>
-        <p>Votes: {votesToSkip}</p>
-        <p>guestCanPause: {guestCanPause.toString()}</p>
-        <p>Host: {isHost.toString()}</p>
+      <div className={styles.roomContainer}>
+        <h1 className={styles.h1}>
+          Room code : <span className={styles.span}>{roomCode}</span>
+        </h1>
+        <p className={styles.p}>Votes needed to skip a song: {votesToSkip}</p>
         {isHost ? renderSettingsButton() : null}
-        <a href="/" onClick={leaveButtonPressed}>
+        <a href="/" onClick={leaveButtonPressed} className={styles.leaveBtn}>
           Leave Room
         </a>
       </div>

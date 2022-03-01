@@ -1,0 +1,78 @@
+.roomContainer {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 150%;
+}
+
+.h1 {
+  text-align: center;
+  color: #7ebdc2;
+  margin: 5% 0;
+  padding: 1%;
+}
+
+.span {
+  background: #7ebdc2;
+  color: #231f20;
+  border-radius: 25px;
+}
+
+.settingBtn {
+  display: flex;
+  width: 25%;
+  margin: 2%;
+  padding: 1%;
+  height: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.settingBtn:hover {
+  background: #7ebdc2;
+  font-weight: bold;
+}
+
+.p {
+  color: #f3dfa2;
+  margin: 3% 0;
+}
+
+.leaveBtn {
+  display: flex;
+  width: auto;
+  height: auto;
+  margin: 3%;
+  padding: 1%;
+  align-items: center;
+  justify-content: center;
+  background: #bb4430;
+  text-align: center;
+  text-decoration: none;
+  color: #231f20;
+}
+
+.settingContainer {
+  width: 100%;
+}
+
+.closeBtnContainer {
+  display: flex;
+  width: 25%;
+  margin: 2%;
+  height: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeBtn {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  text-decoration: none;
+  color: #231f20;
+  background: #bb4430;
+}

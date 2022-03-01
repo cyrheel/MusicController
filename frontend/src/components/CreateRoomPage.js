@@ -108,6 +108,7 @@ class CreateRoomPage extends Component {
             successMsg: "Room updated successfully !",
             updateStatus: true,
           });
+          // alert("Room updated successfully !");
         } else {
           this.setState({
             errorMsg: "Error while updating room :/",
@@ -151,7 +152,12 @@ class CreateRoomPage extends Component {
 
   renderUpdateButtons() {
     return (
-      <button onClick={this.handleUpdateRoomPressed}>Update Room !</button>
+      <button
+        className={styles.createBtn}
+        onClick={this.handleUpdateRoomPressed}
+      >
+        Update Room !
+      </button>
     );
   }
 
